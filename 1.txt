@@ -1,0 +1,68 @@
+case (int)MessageFrame_PR_bsmFrame:
+        {
+            #define OUTLEN 17
+            char out[OUTLEN];
+            mes->choice.bsmFrame.msgCnt = e;
+            mes->choice.bsmFrame.id.buf = ii;
+            mes->choice.bsmFrame.id.size = 8;           
+            gettimeofday(&tv, NULL);
+            s = tv.tv_usec / 100;
+            if(s>59999)
+                mes->choice.bsmFrame.secMark = 59999;
+            else
+                mes->choice.bsmFrame.secMark = s;
+            mes->choice.bsmFrame.timeConfidence = NULL; 
+
+            mes->choice.bsmFrame.pos.elevation = (Elevation_t*)malloc(sizeof(long));
+            *(mes->choice.bsmFrame.pos.elevation) = 112;
+
+            mes->choice.bsmFrame.pos.lat = 23.1295980;  
+            mes->choice.bsmFrame.pos.Long = 11.32531710;
+            mes->choice.bsmFrame.speed = 120;              // m/s -> 0.02m/s 
+            mes->choice.bsmFrame.heading = 10;
+
+            //mes->choice.bsmFrame.pos.lat = SIMULATE_Vehicle::Vehicle_Simulate_mov.latitude* 10000000;
+            //mes->choice.bsmFrame.pos.Long =   SIMULATE_Vehicle::Vehicle_Simulate_mov.longitude* 10000000;
+            //mes->choice.bsmFrame.speed  = SIMULATE_Vehicle::Vehicle_Simulate_mov.speedPerHalfS/0.02;  // m/s -> 0.02m/s 
+
+            if(mes->choice.bsmFrame.heading<0)
+                mes->choice.bsmFrame.heading=0;
+            if(mes->choice.bsmFrame.heading>360)
+                mes->choice.bsmFrame.heading=360;
+            mes->choice.bsmFrame.heading = 10;
+        
+            
+            mes->choice.bsmFrame.posAccuracy = NULL;//2
+            mes->choice.bsmFrame.posConfidence = NULL;//3
+            mes->choice.bsmFrame.transmission = 7;           
+            mes->choice.bsmFrame.angle = NULL;//4
+            mes->choice.bsmFrame.motionCfd = NULL;//5
+
+            mes->choice.bsmFrame.accelSet.lat = 2001;
+            mes->choice.bsmFrame.accelSet.Long = 2001;
+            mes->choice.bsmFrame.accelSet.vert = -127;
+            mes->choice.bsmFrame.accelSet.yaw = 0;
+
+            mes->choice.bsmFrame.brakes.abs = NULL;
+            mes->choice.bsmFrame.brakes.auxBrakes = NULL;
+            mes->choice.bsmFrame.brakes.brakeBoost = NULL;
+            mes->choice.bsmFrame.brakes.brakePadel = (BrakePedalStatus_t*)malloc(sizeof(long));
+            *(mes->choice.bsmFrame.brakes.brakePadel) = BrakePedalStatus_off;
+            mes->choice.bsmFrame.brakes.scs = NULL;
+            mes->choice.bsmFrame.brakes.traction = NULL;
+            mes->choice.bsmFrame.brakes.wheelBrakes = NULL;
+            // D("17\n");
+            mes->choice.bsmFrame.size.height = NULL;
+            mes->choice.bsmFrame.size.length = 500;
+            mes->choice.bsmFrame.size.width = 300;
+            mes->choice.bsmFrame.vehicleClass.classification = 10;
+            mes->choice.bsmFrame.vehicleClass.fuelType = NULL;
+
+            mes->choice.bsmFrame.safetyExt = NULL;//6
+
+            mes->choice.bsmFrame.emergencyExt = NULL;//7
+
+            mes->present = MessageFrame_PR_bsmFrame;
+            
+        }
+            break;
